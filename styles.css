@@ -677,6 +677,22 @@ nav {
 .cta-section p { max-width: 480px; margin: 0 auto var(--space-4); font-size: var(--text-subheading); }
 .cta-ctas { display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap; }
 
+.hubspot-form-wrap {
+  background: var(--color-bone);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  max-width: 480px;
+  margin: 0 auto var(--space-2);
+  text-align: left;
+}
+
+.contact-fallback {
+  font-size: var(--text-body-sm);
+  color: var(--color-muted);
+  margin-bottom: var(--space-2);
+}
+.contact-fallback a { color: var(--color-teal); }
+
 /* Footer */
 footer { padding: var(--space-6) 0; }
 .footer-inner {
