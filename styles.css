@@ -730,6 +730,12 @@ nav {
 .form-status.success { color: var(--color-teal); }
 .form-status.error { color: var(--color-gold); }
 
+.form-hint {
+  font-size: var(--text-caption);
+  color: var(--color-faint);
+  margin: -8px 0 var(--space-2);
+}
+
 .contact-fallback {
   font-size: var(--text-body-sm);
   color: var(--color-muted);

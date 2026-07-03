@@ -31,15 +31,22 @@ if (contactForm) {
     russellville_ar: { city: 'Russellville', state: 'AR', label: 'Russellville, Arkansas' },
   };
 
+  // Don't let homeowners pick a date that's already passed.
+  const dateInput = document.getElementById('preferreddate');
+  if (dateInput) {
+    dateInput.min = new Date().toISOString().split('T')[0];
+  }
+
   contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const statusEl = document.getElementById('formStatus');
     const submitBtn = document.getElementById('contactSubmit');
     const areaKey = contactForm.servicearea.value;
     const area = SERVICE_AREAS[areaKey] || {};
+    const preferredDate = contactForm.preferreddate.value;
     const preferredTime = contactForm.preferredtime.value;
     const rawMessage = contactForm.message.value;
-    const messageWithTime = `Preferred consult time: ${preferredTime || 'Not specified'}${rawMessage ? `\n\n${rawMessage}` : ''}`;
+    const messageWithTime = `Requested consult: ${preferredDate || 'Not specified'} at ${preferredTime || 'Not specified'} (rep to confirm)${rawMessage ? `\n\n${rawMessage}` : ''}`;
 
     const fields = [
       { objectTypeId: '0-1', name: 'firstname', value: contactForm.firstname.value },
@@ -84,6 +91,7 @@ if (contactForm) {
           phone: contactForm.phone.value,
           areaKey,
           areaLabel: area.label || areaKey,
+          preferredDate,
           preferredTime,
           message: rawMessage,
         }),
