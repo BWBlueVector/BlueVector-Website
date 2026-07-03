@@ -677,8 +677,9 @@ nav {
 .cta-section p { max-width: 480px; margin: 0 auto var(--space-4); font-size: var(--text-subheading); }
 .cta-ctas { display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap; }
 
-.hubspot-form-wrap {
-  background: var(--color-bone);
+.contact-form-wrap {
+  background: var(--color-panel);
+  border: 1px solid var(--border);
   border-radius: var(--radius-card);
   padding: var(--space-4);
   max-width: 480px;
@@ -686,12 +687,49 @@ nav {
   text-align: left;
 }
 
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+
+.form-field { margin-bottom: var(--space-2); display: flex; flex-direction: column; gap: 6px; }
+
+.form-field label {
+  font-family: var(--font-display);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.form-field input, .form-field textarea {
+  background: var(--color-void);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  color: var(--color-bone);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.form-field input:focus, .form-field textarea:focus { border-color: var(--color-teal); }
+
+.form-field textarea { resize: vertical; min-height: 72px; font-family: var(--font-body); }
+
+#contactSubmit { width: 100%; margin-top: var(--space-1); }
+
+.form-status { margin-top: var(--space-2); font-size: var(--text-body-sm); min-height: 1.2em; }
+.form-status.success { color: var(--color-teal); }
+.form-status.error { color: var(--color-gold); }
+
 .contact-fallback {
   font-size: var(--text-body-sm);
   color: var(--color-muted);
   margin-bottom: var(--space-2);
 }
 .contact-fallback a { color: var(--color-teal); }
+
+@media (max-width: 480px) {
+  .form-row { grid-template-columns: 1fr; }
+}
 
 /* Footer */
 footer { padding: var(--space-6) 0; }

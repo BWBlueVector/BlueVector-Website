@@ -14,6 +14,63 @@ navLinks.querySelectorAll('a').forEach((link) => {
 });
 
 /* ============================================
+   Contact form — submits straight into the BlueVector HubSpot CRM
+   via the Forms Submission API (no HubSpot embed widget, since this
+   portal's forms aren't compatible with the classic embed script).
+   ============================================ */
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  const HUBSPOT_PORTAL_ID = '246629302';
+  const HUBSPOT_FORM_GUID = 'bef409e3-a93e-4261-bb50-b923050e9531';
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const statusEl = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('contactSubmit');
+
+    const fields = [
+      { objectTypeId: '0-1', name: 'firstname', value: contactForm.firstname.value },
+      { objectTypeId: '0-1', name: 'lastname', value: contactForm.lastname.value },
+      { objectTypeId: '0-1', name: 'email', value: contactForm.email.value },
+      { objectTypeId: '0-1', name: 'phone', value: contactForm.phone.value },
+      { objectTypeId: '0-2', name: 'name', value: contactForm.company.value },
+      { objectTypeId: '0-1', name: 'message', value: contactForm.message.value },
+    ].filter((f) => f.value);
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    statusEl.textContent = '';
+    statusEl.className = 'form-status';
+
+    try {
+      const res = await fetch(
+        `https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fields,
+            context: { pageUri: window.location.href, pageName: document.title },
+          }),
+        }
+      );
+
+      if (!res.ok) throw new Error('Submission failed');
+
+      statusEl.textContent = "Thanks — we'll be in touch shortly.";
+      statusEl.classList.add('success');
+      contactForm.reset();
+    } catch (err) {
+      statusEl.textContent = 'Something went wrong. Please use the email link below instead.';
+      statusEl.classList.add('error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send it over';
+    }
+  });
+}
+
+/* ============================================
    Live status clock — Eastern time, matches the Central Florida
    client base. Updates every 30s, no need for per-second ticks.
    ============================================ */

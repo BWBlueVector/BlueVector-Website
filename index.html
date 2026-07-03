@@ -387,9 +387,38 @@
         <h2>Let's build your pipeline.</h2>
         <p>Book a strategy call to align on your market, positioning, and offer — and leave with a clear plan for generating and converting local leads.</p>
 
-        <div class="hubspot-form-wrap">
-          <div id="hubspotForm"></div>
-        </div>
+        <form id="contactForm" class="contact-form-wrap" novalidate>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="firstname">First name</label>
+              <input type="text" id="firstname" name="firstname" autocomplete="given-name" required>
+            </div>
+            <div class="form-field">
+              <label for="lastname">Last name</label>
+              <input type="text" id="lastname" name="lastname" autocomplete="family-name" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" autocomplete="email" required>
+            </div>
+            <div class="form-field">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel">
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="company">Company name</label>
+            <input type="text" id="company" name="company" autocomplete="organization">
+          </div>
+          <div class="form-field">
+            <label for="message">What are you looking to achieve?</label>
+            <textarea id="message" name="message" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" id="contactSubmit">Send it over</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
 
         <p class="contact-fallback">Prefer email? <a href="mailto:braxton.williams.business@outlook.com?subject=Strategy%20call%20request">braxton.williams.business@outlook.com</a></p>
         <a href="#top" class="btn btn-ghost btn-sm" style="margin-top: var(--space-2);">Back to top</a>
@@ -422,16 +451,5 @@
 </footer>
 
 <script src="script.js"></script>
-<script charset="utf-8" type="text/javascript" src="https://js.hsforms.net/forms/embed/v2.js"></script>
-<script>
-  if (window.hbspt) {
-    hbspt.forms.create({
-      region: "na2",
-      portalId: "246629302",
-      formId: "b47fd401-8936-406a-9962-bc28aa545b09",
-      target: "#hubspotForm"
-    });
-  }
-</script>
 </body>
 </html>
