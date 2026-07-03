@@ -8,9 +8,9 @@ const BLUEVECTOR_EMAIL = 'braxton.williams.business@outlook.com';
 // Local reps by market. Update here as contact info changes or new markets
 // come online — no other code needs to change.
 const REPS = {
-  central_florida: { name: 'Thomas Lupo', email: 'thomasthomaslupo@gmail.com' },
-  columbus_oh: { name: 'Cameron Williams', email: 'cameronfwilliams23@gmail.com' },
-  russellville_ar: { name: 'Wes Wats', email: null }, // email pending
+  central_florida: { name: 'Cameron Williams', email: 'cameronfwilliams23@gmail.com' },
+  columbus_oh: { name: 'Wes Wats', email: null }, // email pending
+  russellville_ar: { name: 'Thomas Lupo', email: 'thomasthomaslupo@gmail.com' },
 };
 
 exports.handler = async (event) => {
