@@ -26,16 +26,20 @@ if (contactForm) {
   // Maps the area dropdown to real city/state values so leads land in
   // HubSpot pre-sorted by market and can be routed to the right local rep.
   const SERVICE_AREAS = {
-    central_florida: { city: 'Central Florida', state: 'FL' },
-    columbus_oh: { city: 'Columbus', state: 'OH' },
-    russellville_ar: { city: 'Russellville', state: 'AR' },
+    central_florida: { city: 'Central Florida', state: 'FL', label: 'Central Florida' },
+    columbus_oh: { city: 'Columbus', state: 'OH', label: 'Columbus, Ohio' },
+    russellville_ar: { city: 'Russellville', state: 'AR', label: 'Russellville, Arkansas' },
   };
 
   contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const statusEl = document.getElementById('formStatus');
     const submitBtn = document.getElementById('contactSubmit');
-    const area = SERVICE_AREAS[contactForm.servicearea.value] || {};
+    const areaKey = contactForm.servicearea.value;
+    const area = SERVICE_AREAS[areaKey] || {};
+    const preferredTime = contactForm.preferredtime.value;
+    const rawMessage = contactForm.message.value;
+    const messageWithTime = `Preferred consult time: ${preferredTime || 'Not specified'}${rawMessage ? `\n\n${rawMessage}` : ''}`;
 
     const fields = [
       { objectTypeId: '0-1', name: 'firstname', value: contactForm.firstname.value },
@@ -44,7 +48,7 @@ if (contactForm) {
       { objectTypeId: '0-1', name: 'phone', value: contactForm.phone.value },
       { objectTypeId: '0-1', name: 'city', value: area.city || '' },
       { objectTypeId: '0-1', name: 'state', value: area.state || '' },
-      { objectTypeId: '0-1', name: 'message', value: contactForm.message.value },
+      { objectTypeId: '0-1', name: 'message', value: messageWithTime },
     ].filter((f) => f.value);
 
     submitBtn.disabled = true;
@@ -66,6 +70,24 @@ if (contactForm) {
       );
 
       if (!res.ok) throw new Error('Submission failed');
+
+      // Best-effort notification email to BlueVector + the matching local rep.
+      // Failures here never block the homeowner's success message — the lead
+      // is already safely in HubSpot regardless of whether this call works.
+      fetch('/.netlify/functions/notify-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: contactForm.firstname.value,
+          lastName: contactForm.lastname.value,
+          email: contactForm.email.value,
+          phone: contactForm.phone.value,
+          areaKey,
+          areaLabel: area.label || areaKey,
+          preferredTime,
+          message: rawMessage,
+        }),
+      }).catch(() => {});
 
       statusEl.textContent = "Thanks — we'll be in touch shortly.";
       statusEl.classList.add('success');
