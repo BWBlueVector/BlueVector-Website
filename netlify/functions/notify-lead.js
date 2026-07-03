@@ -9,7 +9,7 @@ const BLUEVECTOR_EMAIL = 'braxton.williams.business@outlook.com';
 // come online — no other code needs to change.
 const REPS = {
   central_florida: { name: 'Cameron Williams', email: 'cameronfwilliams23@gmail.com' },
-  columbus_oh: { name: 'Wes Wats', email: null }, // email pending
+  columbus_oh: { name: 'Wes Wats', email: 'wwatts2424@gmail.com' },
   russellville_ar: { name: 'Thomas Lupo', email: 'thomasthomaslupo@gmail.com' },
 };
 
