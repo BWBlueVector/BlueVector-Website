@@ -23,17 +23,27 @@ if (contactForm) {
   const HUBSPOT_PORTAL_ID = '246629302';
   const HUBSPOT_FORM_GUID = 'bef409e3-a93e-4261-bb50-b923050e9531';
 
+  // Maps the area dropdown to real city/state values so leads land in
+  // HubSpot pre-sorted by market and can be routed to the right local rep.
+  const SERVICE_AREAS = {
+    central_florida: { city: 'Central Florida', state: 'FL' },
+    columbus_oh: { city: 'Columbus', state: 'OH' },
+    russellville_ar: { city: 'Russellville', state: 'AR' },
+  };
+
   contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const statusEl = document.getElementById('formStatus');
     const submitBtn = document.getElementById('contactSubmit');
+    const area = SERVICE_AREAS[contactForm.servicearea.value] || {};
 
     const fields = [
       { objectTypeId: '0-1', name: 'firstname', value: contactForm.firstname.value },
       { objectTypeId: '0-1', name: 'lastname', value: contactForm.lastname.value },
       { objectTypeId: '0-1', name: 'email', value: contactForm.email.value },
       { objectTypeId: '0-1', name: 'phone', value: contactForm.phone.value },
-      { objectTypeId: '0-2', name: 'name', value: contactForm.company.value },
+      { objectTypeId: '0-1', name: 'city', value: area.city || '' },
+      { objectTypeId: '0-1', name: 'state', value: area.state || '' },
       { objectTypeId: '0-1', name: 'message', value: contactForm.message.value },
     ].filter((f) => f.value);
 

@@ -698,7 +698,7 @@ nav {
   color: var(--color-muted);
 }
 
-.form-field input, .form-field textarea {
+.form-field input, .form-field textarea, .form-field select {
   background: var(--color-void);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
@@ -710,7 +710,17 @@ nav {
   transition: border-color 0.15s ease;
 }
 
-.form-field input:focus, .form-field textarea:focus { border-color: var(--color-teal); }
+.form-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239aa5bd' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.form-field select:invalid { color: var(--color-muted); }
+
+.form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--color-teal); }
 
 .form-field textarea { resize: vertical; min-height: 72px; font-family: var(--font-body); }
 
